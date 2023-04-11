@@ -121,23 +121,23 @@ As a first step to heterogeneity analysis, this paper
 
 ::: {.fragment}
 
-Two pairs of hypotheses:
+**Two pairs of hypotheses:**
 
 1. $H_0: \tau(x) = 0$ for all $x \quad$ **vs.** $\quad H_a: \tau(x) \neq 0$ for some $x$
 2. $H_0: \tau(x)$ is constant for all $x \quad$ **vs.** $\quad H_a: \tau(x)$ is not constant for some $x$
 
 :::
 
-## Rubin's Causal Framework
+## Assumptions
 
 <br>
 
-Rubin's causal framework, and further define:
+Further define:
 
 - Conditional expectations of the potential outcomes $\mu(w, x) = \mathbb{E}[Y_i(w)|X_i = x]$
 - Propensity score $e(x) = P(W_i = 1|X_i = x)$
 
-Assumptions:
+**Assumptions:**
 
 - Unconfoundedness: $W_i \perp (Y_i(1), Y_i(0)) | X_i$
 - Overlap: $\exists \xi > 0$, s.t. $\xi \leqslant e(x) \leqslant 1 - \xi$ for all $x$
