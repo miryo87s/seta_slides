@@ -264,7 +264,7 @@ heterogeneity in CATE/CLATE can be tested with respect to a [low dimensional sub
 
 ::: {.column width="65%"}
 
-![](fig/size.png){fig-align="center" width=100%}
+![](fig/size.png){fig-align="center" width=90%}
 
 :::
 
