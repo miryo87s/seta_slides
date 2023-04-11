@@ -108,7 +108,9 @@ As a first step to heterogeneity analysis, this paper
 
 ::::
 
-## Setting
+## Setting and Hypotheses
+
+**Rubin's Causal Framework**
 
 - Treatment status: $W_i = 0, 1$
 - Covariates: $X_i$
@@ -285,7 +287,8 @@ heterogeneity in CATE/CLATE can be tested with respect to a [low dimensional sub
 **Effect of One-child Policy on the mental health of the only children in China**
 
 - Data constructed by @xie2014introduction, analyzed by @zeng2020being
-- $W_i$: Being the only child; $Y_i$: Confidence, Anxiety, Desperation ranging 1 to 5
+- $W_i$: Being the only child
+- $Y_i$: Confidence, Anxiety, Desperation ranging 1 (worst) to 5 (best)
 - Covariates:
   - Personal features: age, urban, gender, majority, marriage, income
   - Parents features: education, marriage, income
