@@ -128,6 +128,8 @@ Two pairs of hypotheses:
 
 ## Rubin's Causal Framework
 
+<br>
+
 Rubin's causal framework, and further define:
 
 - Conditional expectations of the potential outcomes $\mu(w, x) = \mathbb{E}[Y_i(w)|X_i = x]$
