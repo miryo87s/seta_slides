@@ -294,7 +294,10 @@ heterogeneity in CATE/CLATE can be tested with respect to a [low dimensional sub
 
 - In applications, we illustrate the use of the tests and its assistance to subpopulation analysis
 
+**More in the paper**
 
+- Proof of the semiparametric efficiency of the BLP coefficient estimators
+- Another application (401(k) pension plan) for illustrating the tests with IV and DML
 
 
 
