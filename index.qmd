@@ -148,7 +148,7 @@ $$
 $$
 where $\hat{e}(x)$ is some consistent estimator of $e(x)$
 
-2. Estimate the BLP coefficients $\beta = (\beta_c, \beta_x')$ of $\hat{Y}^*_i$ on $X_i$ by OLS. Then the two pairs of hypotheses translate into
+2. Estimate the BLP coefficients $\beta = (\beta_c, \beta_x')'$ of $\hat{Y}^*_i$ on $X_i$ by OLS. Then the two pairs of hypotheses translate into
 $$\begin{aligned}
 &H_0: \beta = 0 \quad \text{vs.} \quad H_a: \beta \neq 0 \\
 &H_0: \beta_x = 0 \quad \text{vs.} \quad H_a: \beta_x \neq 0
@@ -167,7 +167,7 @@ $$\begin{aligned}
 
 1. Transform $Y_i$ by [AIPW]{.blue}, and $\mathbb{E}[\hat{Y_i^*}|X_i = x] = \tau(x)$ holds
 $$
-Y^*_i = W_i\frac{Y_i - \mu(1, X_i)}{e(X_i)} - (1 - W_i)\frac{Y_i - \mu(0, X_i)}{1 - e(X_i)} + \mu(1, X_i) - \mu(0, X_i)
+\hat{Y}^*_i = W_i\frac{Y_i - \hat\mu(1, X_i)}{\hat{e}(X_i)} - (1 - W_i)\frac{Y_i - \hat\mu(0, X_i)}{1 - \hat{e}(X_i)} + \hat\mu(1, X_i) - \hat\mu(0, X_i)
 $$
 with consistent estimators $\hat{e}(x)$ and $\hat\mu(w, x)$
 
@@ -250,7 +250,25 @@ heterogeneity in CATE/CLATE can be tested with respect to a [low dimensional sub
 
 ### Size
 
-![](fig/size.png){fig-align="center" width=50%}
+:::: {.columns}
+
+::: {.column width="35%"}
+
+- Design1: Experimental data
+
+- Design2-4: Survey data, <br>increasing nonlinearity
+
+- IV: Survey data with instrument
+
+:::
+
+::: {.column width="65%"}
+
+![](fig/size.png){fig-align="center" width=100%}
+
+:::
+
+::::
 
 ### Power Comparison
 
@@ -270,7 +288,7 @@ heterogeneity in CATE/CLATE can be tested with respect to a [low dimensional sub
 - $W_i$: Being the only child; $Y_i$: Confidence, Anxiety, Desperation ranging 1 to 5
 - Covariates:
   - Personal features: age, urban, gender, majority, marriage, income
-  - Parents features: education marriage, income
+  - Parents features: education, marriage, income
 
 <br>
 

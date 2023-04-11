@@ -495,7 +495,7 @@ Fangzhou Yu
 <li><p>Transform <span class="math inline">\(Y_i\)</span> to <span class="math inline">\(\hat{Y}^*_i\)</span> by IPW, such that <span class="math inline">\(\mathbb{E}[\hat{Y}_i^*|X_i = x] = \tau(x)\)</span> <span class="math display">\[
 \hat{Y}_i^* = \frac{W_i Y_i}{\hat{e}(X_i)} - \frac{(1 - W_i)Y_i}{1 - \hat{e}(X_i)}
 \]</span> where <span class="math inline">\(\hat{e}(x)\)</span> is some consistent estimator of <span class="math inline">\(e(x)\)</span></p></li>
-<li><p>Estimate the BLP coefficients <span class="math inline">\(\beta = (\beta_c, \beta_x')\)</span> of <span class="math inline">\(\hat{Y}^*_i\)</span> on <span class="math inline">\(X_i\)</span> by OLS. Then the two pairs of hypotheses translate into <span class="math display">\[\begin{aligned}
+<li><p>Estimate the BLP coefficients <span class="math inline">\(\beta = (\beta_c, \beta_x')'\)</span> of <span class="math inline">\(\hat{Y}^*_i\)</span> on <span class="math inline">\(X_i\)</span> by OLS. Then the two pairs of hypotheses translate into <span class="math display">\[\begin{aligned}
 &amp;H_0: \beta = 0 \quad \text{vs.} \quad H_a: \beta \neq 0 \\
 &amp;H_0: \beta_x = 0 \quad \text{vs.} \quad H_a: \beta_x \neq 0
 \end{aligned}\]</span></p></li>
@@ -513,7 +513,7 @@ Fangzhou Yu
 </section><section id="aipw-solution-to-the-challenge" class="slide level2"><h2>AIPW Solution to the Challenge</h2>
 <ol type="1">
 <li><p>Transform <span class="math inline">\(Y_i\)</span> by <span class="blue">AIPW</span>, and <span class="math inline">\(\mathbb{E}[\hat{Y_i^*}|X_i = x] = \tau(x)\)</span> holds <span class="math display">\[
-Y^*_i = W_i\frac{Y_i - \mu(1, X_i)}{e(X_i)} - (1 - W_i)\frac{Y_i - \mu(0, X_i)}{1 - e(X_i)} + \mu(1, X_i) - \mu(0, X_i)
+\hat{Y}^*_i = W_i\frac{Y_i - \hat\mu(1, X_i)}{\hat{e}(X_i)} - (1 - W_i)\frac{Y_i - \hat\mu(0, X_i)}{1 - \hat{e}(X_i)} + \hat\mu(1, X_i) - \hat\mu(0, X_i)
 \]</span> with consistent estimators <span class="math inline">\(\hat{e}(x)\)</span> and <span class="math inline">\(\hat\mu(w, x)\)</span></p></li>
 <li><p>The OLS estimators <span class="math inline">\(\hat\beta\)</span> has the <span class="blue">standard asymptotic distribution</span></p></li>
 </ol>
@@ -589,9 +589,19 @@ CLATE(x) = \frac{\mathbb{E}[\hat{Y}_i^*|X_i = x]}{\mathbb{E}[\hat{W}_i^*|X_i = x
 </ul>
 <div class="tab-content">
 <div id="tabset-1-1">
+<div class="columns">
+<div class="column" style="width:35%;">
+<ul>
+<li><p>Design1: Experimental data</p></li>
+<li><p>Design2-4: Survey data, <br>increasing nonlinearity</p></li>
+<li><p>IV: Survey data with instrument</p></li>
+</ul>
+</div><div class="column" style="width:65%;">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img data-src="fig/size.png" style="width:50.0%"></p>
+<figure><p><img data-src="fig/size.png" style="width:100.0%"></p>
 </figure>
+</div>
+</div>
 </div>
 </div>
 <div id="tabset-1-2">
@@ -619,7 +629,7 @@ CLATE(x) = \frac{\mathbb{E}[\hat{Y}_i^*|X_i = x]}{\mathbb{E}[\hat{W}_i^*|X_i = x
 <li>Covariates:
 <ul>
 <li>Personal features: age, urban, gender, majority, marriage, income</li>
-<li>Parents features: education marriage, income</li>
+<li>Parents features: education, marriage, income</li>
 </ul>
 </li>
 </ul>
