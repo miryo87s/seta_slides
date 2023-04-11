@@ -142,9 +142,9 @@ Assumptions:
 
 ## A primary idea
 
-1. Transform $Y_i$ to $\hat{Y}^*_i$ by IPW, such that $\mathbb{E}[\hat{Y_i^*}|X_i = x] = \tau(x)$
+1. Transform $Y_i$ to $\hat{Y}^*_i$ by IPW, such that $\mathbb{E}[\hat{Y}_i^*|X_i = x] = \tau(x)$
 $$
-\hat{Y}^* = \frac{W_i Y_i}{\hat{e}(X_i)} - \frac{(1 - W_i)Y_i}{1 - \hat{e}(X_i)}
+\hat{Y}_i^* = \frac{W_i Y_i}{\hat{e}(X_i)} - \frac{(1 - W_i)Y_i}{1 - \hat{e}(X_i)}
 $$
 where $\hat{e}(x)$ is some consistent estimator of $e(x)$
 
