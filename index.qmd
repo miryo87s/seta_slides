@@ -284,7 +284,7 @@ heterogeneity in CATE/CLATE can be tested with respect to a [low dimensional sub
 
 ### CATE Tests
 
-**Effect of One-child Policy on the mental health of the only children in China**
+**Effect of being the only children on mental health in China**
 
 - Data constructed by @xie2014introduction, analyzed by @zeng2020being
 - $W_i$: Being the only child
