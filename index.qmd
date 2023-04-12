@@ -248,7 +248,7 @@ heterogeneity in CATE/CLATE can be tested with respect to a [low dimensional sub
 
 <br>
 
-- $\hat\beta$ still follows the OLS asymptotic distribution
+- **$\hat\beta$ still follows the OLS asymptotic distribution**
 
 ## Simulations
 
