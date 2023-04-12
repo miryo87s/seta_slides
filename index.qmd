@@ -258,7 +258,7 @@ heterogeneity in CATE/CLATE can be tested with respect to a [low dimensional sub
 
 - Design1: Experimental data
 
-- Design2-4: Survey data, <br>different nonlinearity
+- Design2-4: Survey data, <br>different nonlinearity in CATE
 
 - IV: Survey data with instrument
 
