@@ -246,6 +246,10 @@ heterogeneity in CATE/CLATE can be tested with respect to a [low dimensional sub
 - A set of regularity conditions is given to prove the DML theory
 - The choice of $b(X_i)$ is binding by the regularity conditions
 
+<br>
+
+- $\hat\beta$ still follows the OLS asymptotic distribution
+
 ## Simulations
 
 ::: {.panel-tabset}
