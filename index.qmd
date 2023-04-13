@@ -152,8 +152,8 @@ where $\hat{e}(x)$ is some consistent estimator of $e(x)$
 
 2. Estimate the BLP coefficients $\beta = (\beta_c, \beta_x')'$ of $\hat{Y}^*_i$ on $X_i$ by OLS. Then the two pairs of hypotheses translate into
 $$\begin{aligned}
-&H_0: \beta = 0 \quad \text{vs.} \quad H_a: \beta \neq 0 \\
-&H_0: \beta_x = 0 \quad \text{vs.} \quad H_a: \beta_x \neq 0
+&H_0: \tau(x) = 0 \quad &\rightarrow \quad H_0: \beta = 0\\
+&H_0: \tau(x) \text{ is constant } \quad &\rightarrow \quad H_0: \beta_x = 0
 \end{aligned}$$
 
 ::: {.fragment}
