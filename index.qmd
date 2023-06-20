@@ -4,7 +4,7 @@ format:
     theme: ["theme/q-theme.scss"]
     slide-number: c/t
     logo: "unsw-long.png"
-    footer: "WEAI"
+    footer: "SETA"
     code-copy: true
     center-title-slide: false
     include-in-header: heading-meta.html
@@ -36,7 +36,7 @@ editor:
 
 <br>
 
-<h2>WEAI conference</h2>
+<h2>SETA conference</h2>
 
 <hr>
 
