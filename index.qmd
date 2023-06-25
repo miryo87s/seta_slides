@@ -48,31 +48,19 @@ editor:
 
 ![](unsw.png){.absolute top="370" left="1400" width="400"}
 
-## Acronyms
-
-<br>
-
-- **ATE**: Average Treatment Effect
-- **HTE**: Heterogeneous Treatment Effect
-- **CATE**: Conditional Average Treatment Effect
-- **LATE**: Local Average Treatment Effect
-- **CLATE**: Conditional Local Average Treatment Effect
-- **(A)IPW**: (Augmented) Inverse Propensity Weighting
-- **BLP**: Best Linear Projection
-
 ## Overview
 
 Heterogeneity has been more and more important in empirical analysis
 
 As a first step to heterogeneity analysis, this paper
 
-- Propose semiparametric tests for the presence of HTE
+- Propose semiparametric tests for the presence of **Heterogeneous Treatment Effect (HTE)**
 - 2-step procedure:
-  - AIPW transformation on the outcome
-  - Project the transformed outcome on the covariates, test joint significance of BLP coefs
+  - **Augmented Inverse Propensity Weighting (AIPW)** transformation on the outcome
+  - Project the transformed outcome on the covariates, test **joint significance of projection coefs**
 - Test heterogeneity in ATE/LATE in the same framework
 - Only requires standard outputs from statistical software
-- High-dimensional case: Double Machine Learning
+- Extending Double Machine Learning to deal with high-dimensional covariates
 
 ## Literature Review
 
