@@ -18,7 +18,7 @@ format:
     linestretch: 1.7
     auto-stretch: false
     html-math-method: mathjax
-callout-appearance: simple
+callout-appearance: default
 callout-icon: false
 bibliography: ref.bib
 editor: 
@@ -32,6 +32,8 @@ editor:
 
 ```
 
+<br>
+
 <h1>Tests for Heterogeneous Treatment Effect</h1>
 
 <br>
@@ -42,7 +44,7 @@ editor:
 
 <h3>Fangzhou Yu</h3>
 
-<h3>`r Sys.Date()`</h3>
+<h3>2023-07-07</h3>
 
 <br>
 
@@ -50,193 +52,198 @@ editor:
 
 ## Overview
 
-Heterogeneity has been more and more important in empirical analysis
+<br>
 
-As a first step to heterogeneity analysis, this paper
+- Propose semiparametric tests for the **presence of Heterogeneous Treatment Effect (HTE)**
+- Two-step procedure:
+    1. **Augmented Inverse Propensity Weighting (AIPW)** transformation on the outcome
+    2. Project the transformed outcome on the covariates, test **joint significance of projection coefs**
+- Test conditional ATE/LATE in the same framework
+$$
+\mathbb{E}[Y_i(1) - Y_i(0)|X_i = x], \quad \quad \mathbb{E}[Y_i(1) - Y_i(0)|\underbrace{W_i(Z_i = 1) = 1}_{\text{compliers}}, X_i = x]
+$$
 
-- Propose semiparametric tests for the presence of **Heterogeneous Treatment Effect (HTE)**
-- 2-step procedure:
-  - **Augmented Inverse Propensity Weighting (AIPW)** transformation on the outcome
-  - Project the transformed outcome on the covariates, test **joint significance of projection coefs**
-- Test heterogeneity in ATE/LATE in the same framework
-- Only requires standard outputs from statistical software
-- Extending Double Machine Learning to deal with high-dimensional covariates
+- Combine the tests with Double/Debiased Machine Learning (DML) to deal with high-dimensional covariates
 
-## Literature Review
+## Setting and Hypotheses for CATE
 
-:::: {.columns}
-
-::: {.column width="50%}
-
-[Nonparametric tests of HTE]{.blue}: 
-
-- **@crump2008nonparametric:**
-  - Compare regression functions in the treated and control groups
-- **@dai2021nonparametric:**
-  - across strata comparison of ATEs
-  
-[AIPW Estimator]{.blue}: **@robins1994estimation**
-
-[Double Machine Learning]{.blue}: **@chernozhukov2018double**
-
-:::
-
-::: {.column width="50%}
-
-[Inference of average/distributional effects with IPW:]{.blue}
-
-- **@abrevaya2015estimating:**
-  - Nonparametric IPW estimation of CATE
-- **@chang2015nonparametric; @hsu2017consistent:**
-  - Tests that CATE/CLATE is non-negative
-- **@sant2021nonparametric:**
-  - Kaplan-Meier integral based tests on average/distributional effects
-
-:::
-
-::::
-
-## Setting and Hypotheses
-
-**Rubin's Causal Framework**
+**Potential Outcome Framework**
 
 - Treatment status: $W_i = 0, 1$
 - Covariates: $X_i$
 - Potential outcomes for individual $i$: $Y_i(1)$ if treated, $Y_i(0)$ if untreated
 - Observed outcome: $Y_i = W_iY_i(1) + (1 - W_i)Y_i(0)$
-- CATE: $\tau(x) = \mathbb{E}[Y_i(1) - Y_i(0)|X_i]$
+- CATE: $\tau(x) = \mathbb{E}[Y_i(1) - Y_i(0)|X_i = x]$
 - ATE: $\bar\tau = \mathbb{E}[\tau(X_i)]$
 
 ::: {.fragment}
 
 **Two pairs of hypotheses:**
 
-1. $H_0: \tau(x) = 0$ for all $x \quad$ **vs.** $\quad H_a: \tau(x) \neq 0$ for some $x$
+1. $H_0: \tau(x) = 0$ for all $x \qquad \quad \ \ $ **vs.** $\quad H_a: \tau(x) \neq 0$ for some $x$
 2. $H_0: \tau(x)$ is constant for all $x \quad$ **vs.** $\quad H_a: \tau(x)$ is not constant for some $x$
 
 :::
 
-## Assumptions
+## Related Literature
 
-<br>
+- This paper studies the **same hypotheses as in @crump2008nonparametric**
+  - But use different methods and extend to heterogeneity in LATE
+- Employed idea of inference on **conditional effects with IPW**
+  - @abrevaya2015estimating; @chang2015nonparametric; @hsu2017consistent; **@sant2021nonparametric**
 
-Further define:
+<hr>
 
-- Conditional expectations of the potential outcomes $\mu(w, x) = \mathbb{E}[Y_i(w)|X_i = x]$
-- Propensity score $e(x) = P(W_i = 1|X_i = x)$
+The closest paper to mine is **@sant2021nonparametric**:
 
-**Assumptions:**
+- **@sant2021nonparametric**: distributional besides average effects, and allow for right-censored data, which I do not have
+- On the other hand, I have the unique features:
+  - Tests are [straightforward to implement]{.blue} by using AIPW instead of IPW, as only standard outputs from statistical softwares are required
+  - Develop tests in the presence of [high-dimensional covariates using DML]{.blue}
+  - [Projection coefficients]{.blue} of conditional effects are estimated, which can provide a profile of the heterogeneity
 
-- Unconfoundedness: $W_i \perp (Y_i(1), Y_i(0)) | X_i$
-- Overlap: $\exists \xi > 0$, s.t. $\xi \leqslant e(x) \leqslant 1 - \xi$ for all $x$
+## Identification Assumptions for CATE
 
-## A primary idea
+::: {.callout-warning}
+## Identification Assumptions for CATE
 
-1. Transform $Y_i$ to $\hat{Y}^*_i$ by IPW, such that $\mathbb{E}[\hat{Y}_i^*|X_i = x] = \tau(x)$
-$$
-\hat{Y}_i^* = \frac{W_i Y_i}{\hat{e}(X_i)} - \frac{(1 - W_i)Y_i}{1 - \hat{e}(X_i)}
-$$
-where $\hat{e}(x)$ is some consistent estimator of $e(x)$
+**Unconfoundedness:** $W_i \perp (Y_i(1), Y_i(0)) | X_i$
 
-2. Estimate the BLP coefficients $\beta = (\beta_c, \beta_x')'$ of $\hat{Y}^*_i$ on $X_i$ by OLS. Then the two pairs of hypotheses translate into
-$$\begin{aligned}
-&H_0: \tau(x) = 0 \quad &\rightarrow \quad H_0: \beta = 0\\
-&H_0: \tau(x) \text{ is constant } \quad &\rightarrow \quad H_0: \beta_x = 0
-\end{aligned}$$
-
-::: {.fragment}
-
-[Challenge:]{.blue}
-
-- $e(x)$ unknown, plugging in $\hat{e}(x)$ affects the asymptotic distribution of $\hat\beta$
-- Two cases: parametric/nonparametric estimator $\hat{e}(x)$
+**Overlap:** $\exists \xi > 0$, s.t. $\xi \leqslant e_0(x) \leqslant 1 - \xi$ for all $x$
 
 :::
+where $e_0(x) = P(W_i = 1|X_i = x)$ is the propensity score.
 
-## AIPW Solution to the Challenge
+- Further define $\mu_0(w, x) = \mathbb{E}[Y_i(w)|X_i = x]$
+- Then the AIPW transformation is
 
-1. Transform $Y_i$ by [AIPW]{.blue}, and $\mathbb{E}[\hat{Y_i^*}|X_i = x] = \tau(x)$ holds
 $$
 \hat{Y}^*_i = W_i\frac{Y_i - \hat\mu(1, X_i)}{\hat{e}(X_i)} - (1 - W_i)\frac{Y_i - \hat\mu(0, X_i)}{1 - \hat{e}(X_i)} + \hat\mu(1, X_i) - \hat\mu(0, X_i)
 $$
-with consistent estimators $\hat{e}(x)$ and $\hat\mu(w, x)$
 
-2. The OLS estimators $\hat\beta$ has the [standard asymptotic distribution]{.blue}
+- Under identification assumptions, $\mathbb{E}[\hat{Y_i^*}|X_i = x] = \tau(x)$
 
-::: {.callout-note #prp-asym}
+## Why AIPW?
 
-(Consistency and Asymptotic Distribution)
+<br>
 
-Under regularity conditions, 
+- In the literature, IPW is commonly used to identify CATE
+- What is the benefit of using AIPW?
 
-$\hat\beta \xrightarrow{p} \beta$
+1. Semiparametric Efficiency
+    - Related to test power
+2. Simplify the formula of asymptotic variance 
+    - Easier to implement in practice
+3. **The resulting moment is Neyman Orthogonal, which is a key condition for using DML** 
+    - Extension to high-dimensional controls
 
-$\sqrt{n}(\hat\beta - \beta) \xrightarrow{d} N(0, V)$ where
+## AIPW: Parametric Estimation
+
+<br>
+
+**Two-step procedure**
+
+1. Transform $Y_i$ by **AIPW** with consistent **parametric** estimators $\hat\mu_0(w, x)$ and $\hat{e}_0(x)$ to obtain $\hat{Y}^*_i$
+
+2. Estimate the projection coefficients $\beta_0 = (\beta_0^c, \beta_0^{x'})'$ of $\hat{Y}^*_i$ on $X_i$ by OLS. 
+
+$$
+\hat\beta = \arg\min_\beta \frac1n \sum_{i = 1}^{n} (\hat{Y}_i^* - X_i\beta)^2
+$$
+
+Then the two pairs of hypotheses translate into
+$$\begin{aligned}
+&H_0: \tau(x) = 0 \qquad \qquad \rightarrow \quad H_0: \beta_0 = 0\\
+&H_0: \tau(x) \text{ is constant} \quad \rightarrow \quad H_0: \beta_0^x = 0
+\end{aligned}$$
+
+## AIPW: Inference
+
+- The key to the hypothesis tests is deriving the asymptotic distribution of $\hat\beta$
+- Need to take into account plugged-in $\hat{e}(x)$ and $\hat\mu(w, x)$
+
+$$
+\sqrt{n}(\hat\beta - \beta_0) = \left(\frac1n \sum_{i = 1}^{n} X_i'X_i\right)^{-1} \left(\frac{1}{\sqrt{n}}\sum_{i = 1}^{n} \left(X_i\epsilon_i + \underbrace{X_i'\frac{\partial\hat{Y}^*_i}{\partial \gamma} (\hat\gamma - \gamma_0)}_{\color{red}{\frac1n \sum \cdot\rightarrow 0 \text{ because of  AIPW}}}\right)\right)
+$$
+where $\gamma$ are the parameters in $\hat{e}(x)$ and $\hat{\mu}(w, x)$. Thus, $\hat\beta$ has the [standard OLS asymptotic distribution]{.blue}
+
+::: {.callout-note}
+
+## Proposition 3.2(Asymptotic Distribution)
+
+Under regularity conditions and $\hat\beta \xrightarrow{p} \beta_0$, $\sqrt{n}(\hat\beta - \beta_0) \xrightarrow{d} N(0, V)$ where
 $$
 V = \mathbb{E}[X_i'X_i]^{-1}\mathbb{E}[X_i'X_i\epsilon_i^2]\mathbb{E}[X_i'X_i]^{-1}
 $$
 
 :::
 
-and thus, the tests are implemented by standard [Wald tests of joint significance]{.blue}
+## Extension to DML
+
+**DML procedure:**
+
+1. Transform $Y_i$ by AIPW with [ML estimators]{.blue} $\hat{e}(x)$ and $\hat{\mu}(w, x)$. A wide range of ML methods can be applied.
+2. The OLS estimators $\hat\beta$ with [cross-fitting]{.blue} has the standard asymptotic distribution as in the parametric case.
+
+**Cross-fitting:**
+
+![](fig/crossfit.png){fig-align="center"}
+
+## Extension to DML
+
+<br>
+
+**Two key conditions to use DML:**
+
+1. **Neyman Orthogonality** <br> I prove that the moment function of projecting **AIPW** transformed $\hat{Y}^*_i$ on $X_i$ is **Neyman Orthogonal**, namely
+$$
+\partial_\gamma \mathbb{E}[g(D_i, \beta, \gamma_0][\gamma - \gamma_0] = 0
+$$
+where $\partial_\gamma$ is the Gatueax derivative operator and $\gamma = (e(x), \mu(w, x))$ is infinite-dimensional parameter with
+$$
+g(D_i, \beta, \gamma) = X_i'(\hat{Y}^*_i - X_i\beta)
+$$
+
+2. Provide regularity conditions on the **moment** and on **ML estimator** $\hat\gamma$
 
 ## Wald Test of Heterogeneity
 
 <br>
 
-::: {.callout-warning #thm-test}
+Thus, given the asymptotic distribution and a consistent estimator of the variance, the tests are implemented by [Wald tests of joint significance]{.blue}
 
-(Hypothesis Tests for CATE)
+::: {.callout-tip}
+## Theorem 3.1(Hypothesis Tests for CATE)
 
-Assume Unconfoundedness and Overlap holds, under $H_0: (\beta_c, \beta_x')' = 0$, the Wald statistic
+Assume Unconfoundedness and Overlap holds, under $H_0: (\beta^c_0, \beta_0^{x'})' = 0$, the Wald statistic
 $$
 W_1 = (\hat\beta_c, \hat\beta_x')(\hat{V}/n)^{-1}(\hat\beta_c, \hat\beta_x') \xrightarrow{d} \chi^2(p + 1)
 $$
 
-and under $H_0: \beta_x = 0$, the Wald statistic
+and under $H_0: \beta_0^x = 0$, the Wald statistic
 $$
 W_2 = \hat\beta_x'(\hat{V}_{xx}/n)^{-1}\hat\beta_x \xrightarrow{d} \chi^2(p)
 $$
 
 :::
 
-## Heterogeneity Tests with IV
+## Setting and Hypotheses for CLATE
 
-With a binary IV $Z_i$,
+- When Unconfoundedness does not hold and a binary IV is available, conditional LATE is identified by
 $$
 CLATE(x) = \frac{\mathbb{E}[\hat{Y}_i^*|X_i = x]}{\mathbb{E}[\hat{W}_i^*|X_i = x]}
 $$
 
-- $Z_i$ is the treatment in the AIPW transformation of $Y_i$ and $W_i$
-- Let $\beta$ and $\alpha$ denote the BLP coefficients in the numerator and denominator respectively
-- $H_0: CLATE(x) = 0$ for all $x$ translates into $\beta = 0$
-- $H_0:$ constant $CLATE(x)$ translates into $\alpha_x = \beta_x$
+- $Z_i$ is the "treatment" in the AIPW transformation of both $Y_i$ and $W_i$
+- Let $\beta_0$ and $\alpha_0$ denote the BLP coefficients in the numerator and denominator respectively
+- The analogous hypotheses for CLATE:
+  - $H_0: CLATE(x) = 0$ for all $x$ translates into $\beta_0 = 0$
+  - $H_0:$ constant $CLATE(x)$ translates into $\frac{\beta_0^x}{\alpha_0^x} = \frac{\beta_0^c}{\alpha_0^c}$
 
 Obtain $\hat\alpha$ and $\hat\beta$ by one regression, and implement [Wald test + Delta method]{.blue}
 $$
 \begin{bmatrix} \hat{Y}^* \\ \hat{W}^* \end{bmatrix} = \begin{bmatrix} \mathbf{1} & \mathbf{0} & X & \mathbf{0} \\ \mathbf{0} & \mathbf{1} & \mathbf{0} & X\end{bmatrix} \begin{bmatrix}\beta_c \\ \alpha_c \\ \beta_x \\ \alpha_x \end{bmatrix} + \begin{bmatrix} \epsilon_{1} \\ \epsilon_{2}  \end{bmatrix}
 $$ 
-
-## High-dimensional Covariates
-
-<br>
-
-If $X_i$ is high-dimensional,
-
-heterogeneity in CATE/CLATE can be tested with respect to a [low dimensional subset of covariates $b(X_i)$]{.blue}
-
-- Estimate $e(x)$ and $\mu(w, x)$ with machine learning (e.g. lasso, tree-based methods, neural net)
-- Project $\hat{Y}_i^*$ on a low-dimensional subset $b(X_i)$
-
-<br>
-
-- Fits into the [Double Machine Learning (DML)]{.blue} framework in @chernozhukov2018double
-- A set of regularity conditions is given to prove the DML theory
-- The choice of $b(X_i)$ is binding by the regularity conditions
-
-<br>
-
-- **$\hat\beta$ still follows the OLS asymptotic distribution**
 
 ## Simulations
 
@@ -281,15 +288,14 @@ heterogeneity in CATE/CLATE can be tested with respect to a [low dimensional sub
 - Data constructed by @xie2014introduction, analyzed by @zeng2020being
 - $W_i$: Being the only child
 - $Y_i$: Confidence, Anxiety, Desperation ranging 1 (worst) to 5 (best)
-- Covariates:
-  - Personal features: age, urban, gender, majority, marriage, income
-  - Parents features: education, marriage, income
+- Covariates: Personal and parents' socio-demographic features
 
 <br>
 
-- Zero CATE rejected for all three mental measures at $1\%$ level
-- ATE estimates: $-0.088$, $0.005$, $-0.067$. **ATE on Anxiety statistically insignificant**
-- Constant CATE rejected for all three mental measures at $1\%$ level
+- Zero CATE and Constant CATE **rejected** for all three mental measures at $1\%$ level
+- ATE estimates: $-0.088^{***}$, $0.005$, $-0.067^{***}$
+  - Being the only children decreases confidence and exacerbates desperation
+  - The insignificance of the effect on anxiety can be misleading if focused on ATE only
 
 ### BLP coefficients
 
@@ -297,24 +303,23 @@ heterogeneity in CATE/CLATE can be tested with respect to a [low dimensional sub
 
 :::
 
-## Conclusion {.center}
+## Conclusion
 
-- 2-step tests for the presence of heterogeneous treatment effect
-
-- Straightforward to implement because the first step can be ignored due to AIPW
-
-- Flexible and work with CATE/CLATE/High-dimensional cases
-
-- Properties of the tests are shown in simulations
-
+- Two-step tests for HTE that are straightforward to implement
+- Flexible and unified method for CATE/CLATE/high-dim cases
 - In applications, we illustrate the use of the tests and its assistance to subpopulation analysis
 
-**More in the paper**
+[Final notes:]{.blue}
+
+- Rejecting $H_0$ is sufficient but *not* necessary for the existence of HTE
+- Able to assess HTE with respect to a subset of the available covariates and not only the entire set
+  - With high-dim covariates, need to project TE on a low-dim subset
+  - Regularity conditions are binding the choice of this low-dim subset
+
+[More in the paper:]{.blue}
 
 - Proof of the semiparametric efficiency of the BLP coefficient estimators
 - Another application (401(k) pension plan) for illustrating the tests with IV and DML
-
-
 
 
 

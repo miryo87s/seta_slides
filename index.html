@@ -362,6 +362,7 @@
 
 <section class="slide level2">
 
+<p><br></p>
 <h1>
 Tests for Heterogeneous Treatment Effect
 </h1>
@@ -374,188 +375,219 @@ SETA conference
 Fangzhou Yu
 </h3>
 <h3>
-2023-06-25
+2023-07-07
 </h3>
 <p><br></p>
 <p><img data-src="unsw.png" class="absolute" style="top: 370px; left: 1400px; width: 400px; "></p>
 </section>
 <section id="overview" class="slide level2">
 <h2>Overview</h2>
-<p>Heterogeneity has been more and more important in empirical analysis</p>
-<p>As a first step to heterogeneity analysis, this paper</p>
+<p><br></p>
 <ul>
-<li>Propose semiparametric tests for the presence of <strong>Heterogeneous Treatment Effect (HTE)</strong></li>
-<li>2-step procedure:
-<ul>
+<li><p>Propose semiparametric tests for the <strong>presence of Heterogeneous Treatment Effect (HTE)</strong></p></li>
+<li><p>Two-step procedure:</p>
+<ol type="1">
 <li><strong>Augmented Inverse Propensity Weighting (AIPW)</strong> transformation on the outcome</li>
 <li>Project the transformed outcome on the covariates, test <strong>joint significance of projection coefs</strong></li>
-</ul></li>
-<li>Test heterogeneity in ATE/LATE in the same framework</li>
-<li>Only requires standard outputs from statistical software</li>
-<li>Extending Double Machine Learning to deal with high-dimensional covariates</li>
+</ol></li>
+<li><p>Test conditional ATE/LATE in the same framework <span class="math display">\[
+\mathbb{E}[Y_i(1) - Y_i(0)|X_i = x], \quad \quad \mathbb{E}[Y_i(1) - Y_i(0)|\underbrace{W_i(Z_i = 1) = 1}_{\text{compliers}}, X_i = x]
+\]</span></p></li>
+<li><p>Combine the tests with Double/Debiased Machine Learning (DML) to deal with high-dimensional covariates</p></li>
 </ul>
 </section>
-<section id="literature-review" class="slide level2">
-<h2>Literature Review</h2>
-<div class="columns">
-<div class="column" style="width:&quot;50%;">
-<p><span class="blue">Nonparametric tests of HTE</span>:</p>
-<ul>
-<li><strong><span class="citation" data-cites="crump2008nonparametric">Crump et al. (<a href="#/references" role="doc-biblioref" onclick="">2008</a>)</span>:</strong>
-<ul>
-<li>Compare regression functions in the treated and control groups</li>
-</ul></li>
-<li><strong><span class="citation" data-cites="dai2021nonparametric">Dai, Shen, and Stern (<a href="#/references" role="doc-biblioref" onclick="">2021</a>)</span>:</strong>
-<ul>
-<li>across strata comparison of ATEs</li>
-</ul></li>
-</ul>
-<p><span class="blue">AIPW Estimator</span>: <strong><span class="citation" data-cites="robins1994estimation">Robins, Rotnitzky, and Zhao (<a href="#/references" role="doc-biblioref" onclick="">1994</a>)</span></strong></p>
-<p><span class="blue">Double Machine Learning</span>: <strong><span class="citation" data-cites="chernozhukov2018double">Chernozhukov et al. (<a href="#/references" role="doc-biblioref" onclick="">2018</a>)</span></strong></p>
-</div><div class="column" style="width:&quot;50%;">
-<p><span class="blue">Inference of average/distributional effects with IPW:</span></p>
-<ul>
-<li><strong><span class="citation" data-cites="abrevaya2015estimating">Abrevaya, Hsu, and Lieli (<a href="#/references" role="doc-biblioref" onclick="">2015</a>)</span>:</strong>
-<ul>
-<li>Nonparametric IPW estimation of CATE</li>
-</ul></li>
-<li><strong><span class="citation" data-cites="chang2015nonparametric">Chang, Lee, and Whang (<a href="#/references" role="doc-biblioref" onclick="">2015</a>)</span>; <span class="citation" data-cites="hsu2017consistent">Hsu (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span>:</strong>
-<ul>
-<li>Tests that CATE/CLATE is non-negative</li>
-</ul></li>
-<li><strong><span class="citation" data-cites="sant2021nonparametric">Sant’Anna (<a href="#/references" role="doc-biblioref" onclick="">2021</a>)</span>:</strong>
-<ul>
-<li>Kaplan-Meier integral based tests on average/distributional effects</li>
-</ul></li>
-</ul>
-</div>
-</div>
-</section>
-<section id="setting-and-hypotheses" class="slide level2">
-<h2>Setting and Hypotheses</h2>
-<p><strong>Rubin’s Causal Framework</strong></p>
+<section id="setting-and-hypotheses-for-cate" class="slide level2">
+<h2>Setting and Hypotheses for CATE</h2>
+<p><strong>Potential Outcome Framework</strong></p>
 <ul>
 <li>Treatment status: <span class="math inline">\(W_i = 0, 1\)</span></li>
 <li>Covariates: <span class="math inline">\(X_i\)</span></li>
 <li>Potential outcomes for individual <span class="math inline">\(i\)</span>: <span class="math inline">\(Y_i(1)\)</span> if treated, <span class="math inline">\(Y_i(0)\)</span> if untreated</li>
 <li>Observed outcome: <span class="math inline">\(Y_i = W_iY_i(1) + (1 - W_i)Y_i(0)\)</span></li>
-<li>CATE: <span class="math inline">\(\tau(x) = \mathbb{E}[Y_i(1) - Y_i(0)|X_i]\)</span></li>
+<li>CATE: <span class="math inline">\(\tau(x) = \mathbb{E}[Y_i(1) - Y_i(0)|X_i = x]\)</span></li>
 <li>ATE: <span class="math inline">\(\bar\tau = \mathbb{E}[\tau(X_i)]\)</span></li>
 </ul>
 <div class="fragment">
 <p><strong>Two pairs of hypotheses:</strong></p>
 <ol type="1">
-<li><span class="math inline">\(H_0: \tau(x) = 0\)</span> for all <span class="math inline">\(x \quad\)</span> <strong>vs.</strong> <span class="math inline">\(\quad H_a: \tau(x) \neq 0\)</span> for some <span class="math inline">\(x\)</span></li>
+<li><span class="math inline">\(H_0: \tau(x) = 0\)</span> for all <span class="math inline">\(x \qquad \quad \ \ \)</span> <strong>vs.</strong> <span class="math inline">\(\quad H_a: \tau(x) \neq 0\)</span> for some <span class="math inline">\(x\)</span></li>
 <li><span class="math inline">\(H_0: \tau(x)\)</span> is constant for all <span class="math inline">\(x \quad\)</span> <strong>vs.</strong> <span class="math inline">\(\quad H_a: \tau(x)\)</span> is not constant for some <span class="math inline">\(x\)</span></li>
 </ol>
 </div>
 </section>
-<section id="assumptions" class="slide level2">
-<h2>Assumptions</h2>
-<p><br></p>
-<p>Further define:</p>
+<section id="related-literature" class="slide level2">
+<h2>Related Literature</h2>
 <ul>
-<li>Conditional expectations of the potential outcomes <span class="math inline">\(\mu(w, x) = \mathbb{E}[Y_i(w)|X_i = x]\)</span></li>
-<li>Propensity score <span class="math inline">\(e(x) = P(W_i = 1|X_i = x)\)</span></li>
+<li>This paper studies the <strong>same hypotheses as in <span class="citation" data-cites="crump2008nonparametric">Crump et al. (<a href="#/references" role="doc-biblioref" onclick="">2008</a>)</span></strong>
+<ul>
+<li>But use different methods and extend to heterogeneity in LATE</li>
+</ul></li>
+<li>Employed idea of inference on <strong>conditional effects with IPW</strong>
+<ul>
+<li><span class="citation" data-cites="abrevaya2015estimating">Abrevaya, Hsu, and Lieli (<a href="#/references" role="doc-biblioref" onclick="">2015</a>)</span>; <span class="citation" data-cites="chang2015nonparametric">Chang, Lee, and Whang (<a href="#/references" role="doc-biblioref" onclick="">2015</a>)</span>; <span class="citation" data-cites="hsu2017consistent">Hsu (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span>; <strong><span class="citation" data-cites="sant2021nonparametric">Sant’Anna (<a href="#/references" role="doc-biblioref" onclick="">2021</a>)</span></strong></li>
+</ul></li>
 </ul>
-<p><strong>Assumptions:</strong></p>
+<hr>
+<p>The closest paper to mine is <strong><span class="citation" data-cites="sant2021nonparametric">Sant’Anna (<a href="#/references" role="doc-biblioref" onclick="">2021</a>)</span></strong>:</p>
 <ul>
-<li>Unconfoundedness: <span class="math inline">\(W_i \perp (Y_i(1), Y_i(0)) | X_i\)</span></li>
-<li>Overlap: <span class="math inline">\(\exists \xi &gt; 0\)</span>, s.t. <span class="math inline">\(\xi \leqslant e(x) \leqslant 1 - \xi\)</span> for all <span class="math inline">\(x\)</span></li>
+<li><strong><span class="citation" data-cites="sant2021nonparametric">Sant’Anna (<a href="#/references" role="doc-biblioref" onclick="">2021</a>)</span></strong>: distributional besides average effects, and allow for right-censored data, which I do not have</li>
+<li>On the other hand, I have the unique features:
+<ul>
+<li>Tests are <span class="blue">straightforward to implement</span> by using AIPW instead of IPW, as only standard outputs from statistical softwares are required</li>
+<li>Develop tests in the presence of <span class="blue">high-dimensional covariates using DML</span></li>
+<li><span class="blue">Projection coefficients</span> of conditional effects are estimated, which can provide a profile of the heterogeneity</li>
+</ul></li>
 </ul>
 </section>
-<section id="a-primary-idea" class="slide level2">
-<h2>A primary idea</h2>
-<ol type="1">
-<li><p>Transform <span class="math inline">\(Y_i\)</span> to <span class="math inline">\(\hat{Y}^*_i\)</span> by IPW, such that <span class="math inline">\(\mathbb{E}[\hat{Y}_i^*|X_i = x] = \tau(x)\)</span> <span class="math display">\[
-\hat{Y}_i^* = \frac{W_i Y_i}{\hat{e}(X_i)} - \frac{(1 - W_i)Y_i}{1 - \hat{e}(X_i)}
-\]</span> where <span class="math inline">\(\hat{e}(x)\)</span> is some consistent estimator of <span class="math inline">\(e(x)\)</span></p></li>
-<li><p>Estimate the BLP coefficients <span class="math inline">\(\beta = (\beta_c, \beta_x')'\)</span> of <span class="math inline">\(\hat{Y}^*_i\)</span> on <span class="math inline">\(X_i\)</span> by OLS. Then the two pairs of hypotheses translate into <span class="math display">\[\begin{aligned}
-&amp;H_0: \tau(x) = 0 \quad &amp;\rightarrow \quad H_0: \beta = 0\\
-&amp;H_0: \tau(x) \text{ is constant } \quad &amp;\rightarrow \quad H_0: \beta_x = 0
-\end{aligned}\]</span></p></li>
-</ol>
-<div class="fragment">
-<p><span class="blue">Challenge:</span></p>
-<ul>
-<li><span class="math inline">\(e(x)\)</span> unknown, plugging in <span class="math inline">\(\hat{e}(x)\)</span> affects the asymptotic distribution of <span class="math inline">\(\hat\beta\)</span></li>
-<li>Two cases: parametric/nonparametric estimator <span class="math inline">\(\hat{e}(x)\)</span></li>
-</ul>
-</div>
-</section>
-<section id="aipw-solution-to-the-challenge" class="slide level2">
-<h2>AIPW Solution to the Challenge</h2>
-<ol type="1">
-<li><p>Transform <span class="math inline">\(Y_i\)</span> by <span class="blue">AIPW</span>, and <span class="math inline">\(\mathbb{E}[\hat{Y_i^*}|X_i = x] = \tau(x)\)</span> holds <span class="math display">\[
-\hat{Y}^*_i = W_i\frac{Y_i - \hat\mu(1, X_i)}{\hat{e}(X_i)} - (1 - W_i)\frac{Y_i - \hat\mu(0, X_i)}{1 - \hat{e}(X_i)} + \hat\mu(1, X_i) - \hat\mu(0, X_i)
-\]</span> with consistent estimators <span class="math inline">\(\hat{e}(x)\)</span> and <span class="math inline">\(\hat\mu(w, x)\)</span></p></li>
-<li><p>The OLS estimators <span class="math inline">\(\hat\beta\)</span> has the <span class="blue">standard asymptotic distribution</span></p></li>
-</ol>
-<div class="callout callout-note no-icon callout-style-simple">
+<section id="identification-assumptions-for-cate" class="slide level2">
+<h2>Identification Assumptions for CATE</h2>
+<div class="callout callout-warning no-icon callout-titled callout-style-default">
 <div class="callout-body">
+<div class="callout-title">
+<p><strong>Identification Assumptions for CATE</strong></p>
+</div>
 <div class="callout-content">
-<p>(Consistency and Asymptotic Distribution)</p>
-<p>Under regularity conditions,</p>
-<p><span class="math inline">\(\hat\beta \xrightarrow{p} \beta\)</span></p>
-<p><span class="math inline">\(\sqrt{n}(\hat\beta - \beta) \xrightarrow{d} N(0, V)\)</span> where <span class="math display">\[
+<p><strong>Unconfoundedness:</strong> <span class="math inline">\(W_i \perp (Y_i(1), Y_i(0)) | X_i\)</span></p>
+<p><strong>Overlap:</strong> <span class="math inline">\(\exists \xi &gt; 0\)</span>, s.t. <span class="math inline">\(\xi \leqslant e_0(x) \leqslant 1 - \xi\)</span> for all <span class="math inline">\(x\)</span></p>
+</div>
+</div>
+</div>
+<p>where <span class="math inline">\(e_0(x) = P(W_i = 1|X_i = x)\)</span> is the propensity score.</p>
+<ul>
+<li>Further define <span class="math inline">\(\mu_0(w, x) = \mathbb{E}[Y_i(w)|X_i = x]\)</span></li>
+<li>Then the AIPW transformation is</li>
+</ul>
+<p><span class="math display">\[
+\hat{Y}^*_i = W_i\frac{Y_i - \hat\mu(1, X_i)}{\hat{e}(X_i)} - (1 - W_i)\frac{Y_i - \hat\mu(0, X_i)}{1 - \hat{e}(X_i)} + \hat\mu(1, X_i) - \hat\mu(0, X_i)
+\]</span></p>
+<ul>
+<li>Under identification assumptions, <span class="math inline">\(\mathbb{E}[\hat{Y_i^*}|X_i = x] = \tau(x)\)</span></li>
+</ul>
+</section>
+<section id="why-aipw" class="slide level2">
+<h2>Why AIPW?</h2>
+<p><br></p>
+<ul>
+<li>In the literature, IPW is commonly used to identify CATE</li>
+<li>What is the benefit of using AIPW?</li>
+</ul>
+<ol type="1">
+<li>Semiparametric Efficiency
+<ul>
+<li>Related to test power</li>
+</ul></li>
+<li>Simplify the formula of asymptotic variance
+<ul>
+<li>Easier to implement in practice</li>
+</ul></li>
+<li><strong>The resulting moment is Neyman Orthogonal, which is a key condition for using DML</strong>
+<ul>
+<li>Extension to high-dimensional controls</li>
+</ul></li>
+</ol>
+</section>
+<section id="aipw-parametric-estimation" class="slide level2">
+<h2>AIPW: Parametric Estimation</h2>
+<p><br></p>
+<p><strong>Two-step procedure</strong></p>
+<ol type="1">
+<li><p>Transform <span class="math inline">\(Y_i\)</span> by <strong>AIPW</strong> with consistent <strong>parametric</strong> estimators <span class="math inline">\(\hat\mu_0(w, x)\)</span> and <span class="math inline">\(\hat{e}_0(x)\)</span> to obtain <span class="math inline">\(\hat{Y}^*_i\)</span></p></li>
+<li><p>Estimate the projection coefficients <span class="math inline">\(\beta_0 = (\beta_0^c, \beta_0^{x'})'\)</span> of <span class="math inline">\(\hat{Y}^*_i\)</span> on <span class="math inline">\(X_i\)</span> by OLS.</p></li>
+</ol>
+<p><span class="math display">\[
+\hat\beta = \arg\min_\beta \frac1n \sum_{i = 1}^{n} (\hat{Y}_i^* - X_i\beta)^2
+\]</span></p>
+<p>Then the two pairs of hypotheses translate into <span class="math display">\[\begin{aligned}
+&amp;H_0: \tau(x) = 0 \qquad \qquad \rightarrow \quad H_0: \beta_0 = 0\\
+&amp;H_0: \tau(x) \text{ is constant} \quad \rightarrow \quad H_0: \beta_0^x = 0
+\end{aligned}\]</span></p>
+</section>
+<section id="aipw-inference" class="slide level2">
+<h2>AIPW: Inference</h2>
+<ul>
+<li>The key to the hypothesis tests is deriving the asymptotic distribution of <span class="math inline">\(\hat\beta\)</span></li>
+<li>Need to take into account plugged-in <span class="math inline">\(\hat{e}(x)\)</span> and <span class="math inline">\(\hat\mu(w, x)\)</span></li>
+</ul>
+<p><span class="math display">\[
+\sqrt{n}(\hat\beta - \beta_0) = \left(\frac1n \sum_{i = 1}^{n} X_i'X_i\right)^{-1} \left(\frac{1}{\sqrt{n}}\sum_{i = 1}^{n} \left(X_i\epsilon_i + \underbrace{X_i'\frac{\partial\hat{Y}^*_i}{\partial \gamma} (\hat\gamma - \gamma_0)}_{\color{red}{\frac1n \sum \cdot\rightarrow 0 \text{ because of  AIPW}}}\right)\right)
+\]</span> where <span class="math inline">\(\gamma\)</span> are the parameters in <span class="math inline">\(\hat{e}(x)\)</span> and <span class="math inline">\(\hat{\mu}(w, x)\)</span>. Thus, <span class="math inline">\(\hat\beta\)</span> has the <span class="blue">standard OLS asymptotic distribution</span></p>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Proposition 3.2(Asymptotic Distribution)</strong></p>
+</div>
+<div class="callout-content">
+<p>Under regularity conditions and <span class="math inline">\(\hat\beta \xrightarrow{p} \beta_0\)</span>, <span class="math inline">\(\sqrt{n}(\hat\beta - \beta_0) \xrightarrow{d} N(0, V)\)</span> where <span class="math display">\[
 V = \mathbb{E}[X_i'X_i]^{-1}\mathbb{E}[X_i'X_i\epsilon_i^2]\mathbb{E}[X_i'X_i]^{-1}
 \]</span></p>
 </div>
 </div>
 </div>
-<p>and thus, the tests are implemented by standard <span class="blue">Wald tests of joint significance</span></p>
+</section>
+<section id="extension-to-dml" class="slide level2">
+<h2>Extension to DML</h2>
+<p><strong>DML procedure:</strong></p>
+<ol type="1">
+<li>Transform <span class="math inline">\(Y_i\)</span> by AIPW with <span class="blue">ML estimators</span> <span class="math inline">\(\hat{e}(x)\)</span> and <span class="math inline">\(\hat{\mu}(w, x)\)</span>. A wide range of ML methods can be applied.</li>
+<li>The OLS estimators <span class="math inline">\(\hat\beta\)</span> with <span class="blue">cross-fitting</span> has the standard asymptotic distribution as in the parametric case.</li>
+</ol>
+<p><strong>Cross-fitting:</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="fig/crossfit.png"></p>
+</figure>
+</div>
+</section>
+<section id="extension-to-dml-1" class="slide level2">
+<h2>Extension to DML</h2>
+<p><br></p>
+<p><strong>Two key conditions to use DML:</strong></p>
+<ol type="1">
+<li><p><strong>Neyman Orthogonality</strong> <br> I prove that the moment function of projecting <strong>AIPW</strong> transformed <span class="math inline">\(\hat{Y}^*_i\)</span> on <span class="math inline">\(X_i\)</span> is <strong>Neyman Orthogonal</strong>, namely <span class="math display">\[
+\partial_\gamma \mathbb{E}[g(D_i, \beta, \gamma_0][\gamma - \gamma_0] = 0
+\]</span> where <span class="math inline">\(\partial_\gamma\)</span> is the Gatueax derivative operator and <span class="math inline">\(\gamma = (e(x), \mu(w, x))\)</span> is infinite-dimensional parameter with <span class="math display">\[
+g(D_i, \beta, \gamma) = X_i'(\hat{Y}^*_i - X_i\beta)
+\]</span></p></li>
+<li><p>Provide regularity conditions on the <strong>moment</strong> and on <strong>ML estimator</strong> <span class="math inline">\(\hat\gamma\)</span></p></li>
+</ol>
 </section>
 <section id="wald-test-of-heterogeneity" class="slide level2">
 <h2>Wald Test of Heterogeneity</h2>
 <p><br></p>
-<div class="callout callout-warning no-icon callout-style-simple">
+<p>Thus, given the asymptotic distribution and a consistent estimator of the variance, the tests are implemented by <span class="blue">Wald tests of joint significance</span></p>
+<div class="callout callout-tip no-icon callout-titled callout-style-default">
 <div class="callout-body">
+<div class="callout-title">
+<p><strong>Theorem 3.1(Hypothesis Tests for CATE)</strong></p>
+</div>
 <div class="callout-content">
-<p>(Hypothesis Tests for CATE)</p>
-<p>Assume Unconfoundedness and Overlap holds, under <span class="math inline">\(H_0: (\beta_c, \beta_x')' = 0\)</span>, the Wald statistic <span class="math display">\[
+<p>Assume Unconfoundedness and Overlap holds, under <span class="math inline">\(H_0: (\beta^c_0, \beta_0^{x'})' = 0\)</span>, the Wald statistic <span class="math display">\[
 W_1 = (\hat\beta_c, \hat\beta_x')(\hat{V}/n)^{-1}(\hat\beta_c, \hat\beta_x') \xrightarrow{d} \chi^2(p + 1)
 \]</span></p>
-<p>and under <span class="math inline">\(H_0: \beta_x = 0\)</span>, the Wald statistic <span class="math display">\[
+<p>and under <span class="math inline">\(H_0: \beta_0^x = 0\)</span>, the Wald statistic <span class="math display">\[
 W_2 = \hat\beta_x'(\hat{V}_{xx}/n)^{-1}\hat\beta_x \xrightarrow{d} \chi^2(p)
 \]</span></p>
 </div>
 </div>
 </div>
 </section>
-<section id="heterogeneity-tests-with-iv" class="slide level2">
-<h2>Heterogeneity Tests with IV</h2>
-<p>With a binary IV <span class="math inline">\(Z_i\)</span>, <span class="math display">\[
-CLATE(x) = \frac{\mathbb{E}[\hat{Y}_i^*|X_i = x]}{\mathbb{E}[\hat{W}_i^*|X_i = x]}
-\]</span></p>
+<section id="setting-and-hypotheses-for-clate" class="slide level2">
+<h2>Setting and Hypotheses for CLATE</h2>
 <ul>
-<li><span class="math inline">\(Z_i\)</span> is the treatment in the AIPW transformation of <span class="math inline">\(Y_i\)</span> and <span class="math inline">\(W_i\)</span></li>
-<li>Let <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\alpha\)</span> denote the BLP coefficients in the numerator and denominator respectively</li>
-<li><span class="math inline">\(H_0: CLATE(x) = 0\)</span> for all <span class="math inline">\(x\)</span> translates into <span class="math inline">\(\beta = 0\)</span></li>
-<li><span class="math inline">\(H_0:\)</span> constant <span class="math inline">\(CLATE(x)\)</span> translates into <span class="math inline">\(\alpha_x = \beta_x\)</span></li>
+<li><p>When Unconfoundedness does not hold and a binary IV is available, conditional LATE is identified by <span class="math display">\[
+CLATE(x) = \frac{\mathbb{E}[\hat{Y}_i^*|X_i = x]}{\mathbb{E}[\hat{W}_i^*|X_i = x]}
+\]</span></p></li>
+<li><p><span class="math inline">\(Z_i\)</span> is the “treatment” in the AIPW transformation of both <span class="math inline">\(Y_i\)</span> and <span class="math inline">\(W_i\)</span></p></li>
+<li><p>Let <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\alpha_0\)</span> denote the BLP coefficients in the numerator and denominator respectively</p></li>
+<li><p>The analogous hypotheses for CLATE:</p>
+<ul>
+<li><span class="math inline">\(H_0: CLATE(x) = 0\)</span> for all <span class="math inline">\(x\)</span> translates into <span class="math inline">\(\beta_0 = 0\)</span></li>
+<li><span class="math inline">\(H_0:\)</span> constant <span class="math inline">\(CLATE(x)\)</span> translates into <span class="math inline">\(\frac{\beta_0^x}{\alpha_0^x} = \frac{\beta_0^c}{\alpha_0^c}\)</span></li>
+</ul></li>
 </ul>
 <p>Obtain <span class="math inline">\(\hat\alpha\)</span> and <span class="math inline">\(\hat\beta\)</span> by one regression, and implement <span class="blue">Wald test + Delta method</span> <span class="math display">\[
 \begin{bmatrix} \hat{Y}^* \\ \hat{W}^* \end{bmatrix} = \begin{bmatrix} \mathbf{1} &amp; \mathbf{0} &amp; X &amp; \mathbf{0} \\ \mathbf{0} &amp; \mathbf{1} &amp; \mathbf{0} &amp; X\end{bmatrix} \begin{bmatrix}\beta_c \\ \alpha_c \\ \beta_x \\ \alpha_x \end{bmatrix} + \begin{bmatrix} \epsilon_{1} \\ \epsilon_{2}  \end{bmatrix}
 \]</span></p>
-</section>
-<section id="high-dimensional-covariates" class="slide level2">
-<h2>High-dimensional Covariates</h2>
-<p><br></p>
-<p>If <span class="math inline">\(X_i\)</span> is high-dimensional,</p>
-<p>heterogeneity in CATE/CLATE can be tested with respect to a <span class="blue">low dimensional subset of covariates <span class="math inline">\(b(X_i)\)</span></span></p>
-<ul>
-<li>Estimate <span class="math inline">\(e(x)\)</span> and <span class="math inline">\(\mu(w, x)\)</span> with machine learning (e.g.&nbsp;lasso, tree-based methods, neural net)</li>
-<li>Project <span class="math inline">\(\hat{Y}_i^*\)</span> on a low-dimensional subset <span class="math inline">\(b(X_i)\)</span></li>
-</ul>
-<p><br></p>
-<ul>
-<li>Fits into the <span class="blue">Double Machine Learning (DML)</span> framework in <span class="citation" data-cites="chernozhukov2018double">Chernozhukov et al. (<a href="#/references" role="doc-biblioref" onclick="">2018</a>)</span></li>
-<li>A set of regularity conditions is given to prove the DML theory</li>
-<li>The choice of <span class="math inline">\(b(X_i)\)</span> is binding by the regularity conditions</li>
-</ul>
-<p><br></p>
-<ul>
-<li><strong><span class="math inline">\(\hat\beta\)</span> still follows the OLS asymptotic distribution</strong></li>
-</ul>
 </section>
 <section id="simulations" class="slide level2">
 <h2>Simulations</h2>
@@ -600,17 +632,16 @@ CLATE(x) = \frac{\mathbb{E}[\hat{Y}_i^*|X_i = x]}{\mathbb{E}[\hat{W}_i^*|X_i = x
 <li>Data constructed by <span class="citation" data-cites="xie2014introduction">Xie and Hu (<a href="#/references" role="doc-biblioref" onclick="">2014</a>)</span>, analyzed by <span class="citation" data-cites="zeng2020being">Zeng, Li, and Ding (<a href="#/references" role="doc-biblioref" onclick="">2020</a>)</span></li>
 <li><span class="math inline">\(W_i\)</span>: Being the only child</li>
 <li><span class="math inline">\(Y_i\)</span>: Confidence, Anxiety, Desperation ranging 1 (worst) to 5 (best)</li>
-<li>Covariates:
-<ul>
-<li>Personal features: age, urban, gender, majority, marriage, income</li>
-<li>Parents features: education, marriage, income</li>
-</ul></li>
+<li>Covariates: Personal and parents’ socio-demographic features</li>
 </ul>
 <p><br></p>
 <ul>
-<li>Zero CATE rejected for all three mental measures at <span class="math inline">\(1\%\)</span> level</li>
-<li>ATE estimates: <span class="math inline">\(-0.088\)</span>, <span class="math inline">\(0.005\)</span>, <span class="math inline">\(-0.067\)</span>. <strong>ATE on Anxiety statistically insignificant</strong></li>
-<li>Constant CATE rejected for all three mental measures at <span class="math inline">\(1\%\)</span> level</li>
+<li>Zero CATE and Constant CATE <strong>rejected</strong> for all three mental measures at <span class="math inline">\(1\%\)</span> level</li>
+<li>ATE estimates: <span class="math inline">\(-0.088^{***}\)</span>, <span class="math inline">\(0.005\)</span>, <span class="math inline">\(-0.067^{***}\)</span>
+<ul>
+<li>Being the only children decreases confidence and exacerbates desperation</li>
+<li>The insignificance of the effect on anxiety can be misleading if focused on ATE only</li>
+</ul></li>
 </ul>
 </div>
 <div id="tabset-2-2">
@@ -623,16 +654,23 @@ CLATE(x) = \frac{\mathbb{E}[\hat{Y}_i^*|X_i = x]}{\mathbb{E}[\hat{W}_i^*|X_i = x
 </div>
 </div>
 </section>
-<section id="conclusion" class="slide level2 center">
+<section id="conclusion" class="slide level2">
 <h2>Conclusion</h2>
 <ul>
-<li><p>2-step tests for the presence of heterogeneous treatment effect</p></li>
-<li><p>Straightforward to implement because the first step can be ignored due to AIPW</p></li>
-<li><p>Flexible and work with CATE/CLATE/High-dimensional cases</p></li>
-<li><p>Properties of the tests are shown in simulations</p></li>
-<li><p>In applications, we illustrate the use of the tests and its assistance to subpopulation analysis</p></li>
+<li>Two-step tests for HTE that are straightforward to implement</li>
+<li>Flexible and unified method for CATE/CLATE/high-dim cases</li>
+<li>In applications, we illustrate the use of the tests and its assistance to subpopulation analysis</li>
 </ul>
-<p><strong>More in the paper</strong></p>
+<p><span class="blue">Final notes:</span></p>
+<ul>
+<li>Rejecting <span class="math inline">\(H_0\)</span> is sufficient but <em>not</em> necessary for the existence of HTE</li>
+<li>Able to assess HTE with respect to a subset of the available covariates and not only the entire set
+<ul>
+<li>With high-dim covariates, need to project TE on a low-dim subset</li>
+<li>Regularity conditions are binding the choice of this low-dim subset</li>
+</ul></li>
+</ul>
+<p><span class="blue">More in the paper:</span></p>
 <ul>
 <li>Proof of the semiparametric efficiency of the BLP coefficient estimators</li>
 <li>Another application (401(k) pension plan) for illustrating the tests with IV and DML</li>
@@ -651,20 +689,11 @@ Abrevaya, Jason, Yu-Chin Hsu, and Robert P Lieli. 2015. <span>“Estimating Cond
 <div id="ref-chang2015nonparametric" class="csl-entry" role="listitem">
 Chang, Minsu, Sokbae Lee, and Yoon-Jae Whang. 2015. <span>“Nonparametric Tests of Conditional Treatment Effects with an Application to Single-Sex Schooling on Academic Achievements.”</span> <em>The Econometrics Journal</em> 18 (3): 307–46.
 </div>
-<div id="ref-chernozhukov2018double" class="csl-entry" role="listitem">
-Chernozhukov, Victor, Denis Chetverikov, Mert Demirer, Esther Duflo, Christian Hansen, Whitney Newey, and James Robins. 2018. <span>“Double/Debiased Machine Learning for Treatment and Structural Parameters.”</span> Oxford University Press Oxford, UK.
-</div>
 <div id="ref-crump2008nonparametric" class="csl-entry" role="listitem">
 Crump, Richard K, V Joseph Hotz, Guido W Imbens, and Oscar A Mitnik. 2008. <span>“Nonparametric Tests for Treatment Effect Heterogeneity.”</span> <em>The Review of Economics and Statistics</em> 90 (3): 389–405.
 </div>
-<div id="ref-dai2021nonparametric" class="csl-entry" role="listitem">
-Dai, Maozhu, Weining Shen, and Hal S Stern. 2021. <span>“Nonparametric Tests for Treatment Effect Heterogeneity in Observational Studies.”</span> <em>arXiv Preprint arXiv:2103.15023</em>.
-</div>
 <div id="ref-hsu2017consistent" class="csl-entry" role="listitem">
 Hsu, Yu-Chin. 2017. <span>“Consistent Tests for Conditional Treatment Effects.”</span> <em>The Econometrics Journal</em> 20 (1): 1–22.
-</div>
-<div id="ref-robins1994estimation" class="csl-entry" role="listitem">
-Robins, James M, Andrea Rotnitzky, and Lue Ping Zhao. 1994. <span>“Estimation of Regression Coefficients When Some Regressors Are Not Always Observed.”</span> <em>Journal of the American Statistical Association</em> 89 (427): 846–66.
 </div>
 <div id="ref-sant2021nonparametric" class="csl-entry" role="listitem">
 Sant’Anna, Pedro HC. 2021. <span>“Nonparametric Tests for Treatment Effect Heterogeneity with Duration Outcomes.”</span> <em>Journal of Business &amp; Economic Statistics</em> 39 (3): 816–32.
