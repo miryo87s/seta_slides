@@ -245,35 +245,33 @@ $$
 \begin{bmatrix} \hat{Y}^* \\ \hat{W}^* \end{bmatrix} = \begin{bmatrix} \mathbf{1} & \mathbf{0} & X & \mathbf{0} \\ \mathbf{0} & \mathbf{1} & \mathbf{0} & X\end{bmatrix} \begin{bmatrix}\beta_c \\ \alpha_c \\ \beta_x \\ \alpha_x \end{bmatrix} + \begin{bmatrix} \epsilon_{1} \\ \epsilon_{2}  \end{bmatrix}
 $$ 
 
-## Simulations
+## Simulated Size of the Tests
 
 ::: {.panel-tabset}
 
-### Size
+### Designs
 
-:::: {.columns}
+$$
+Y_i(w) = \mu_0(0, X_i) + \tau_0(X_i) \cdot w + \epsilon_i, \quad Pr(W_i = 1|X_i) = e_0(X_i)
+$$
 
-::: {.column width="35%"}
+Designs:
 
-- Design1: Experimental data
+1.  $\mu_0(0, x) = 1 + \sum_{p = 1}^{2}x_p$; $\tau_0(x) = \alpha \sum_{p = 1}^{2}x_p$; $e_0(x) = 0.5$
 
-- Design2-4: Survey data, <br>different nonlinearity in CATE
+2.  $\mu_0(0, x) = 1 + \sum_{p = 1}^{2}x_p$; $\tau_0(x) = \alpha \sum_{p = 1}^{2}x_p$; $e_0(x) = 1 / (1 + \exp(-1 - 0.4x_1 + 0.2x_2))$
 
-- IV: Survey data with instrument
+3.  $\mu_0(0, x) = 1 + \sum_{p = 1}^{2}x_p$; $\tau_0(x) = \alpha (x_1 + x_2 + x_1 \cdot x_2)$; $e_0(x) = 1 / (1 + \exp(-1 - 0.4x_1 + 0.2x_2))$
 
-:::
+4.  $\mu_0(0, x) = 1 + \sum_{p = 1}^{2}x_p$; $\tau_0(x) = \alpha(1\{x_1 > 0\} - 1\{x_1 \leqslant 0\})$; $e_0(x) = 1 / (1 + \exp(-1 - 0.4x_1 + 0.2x_2))$
 
-::: {.column width="65%"}
+IV: Linear outcome and TE functions similar to Design 2, but with a binary instrument that has a logit propensity score
 
-![](fig/size.png){fig-align="center" width=90%}
+### Result
 
-:::
+Compared with the tests developed by @crump2008nonparametric
 
-::::
-
-### Power Comparison
-
-![](fig/compare.png){fig-align="center" width=75%}
+![](fig/size.png){fig-align="center" width=50%}
 
 :::
 
@@ -295,7 +293,7 @@ $$
 - Zero CATE and Constant CATE **rejected** for all three mental measures at $1\%$ level
 - ATE estimates: $-0.088^{***}$, $0.005$, $-0.067^{***}$
   - Being the only children decreases confidence and exacerbates desperation
-  - The insignificance of the effect on anxiety can be misleading if focused on ATE only
+  - The insignificance of the effect on anxiety can be **misleading if focused on ATE only**
 
 ### BLP coefficients
 
@@ -305,21 +303,19 @@ $$
 
 ## Conclusion
 
+<br>
+
 - Two-step tests for HTE that are straightforward to implement
 - Flexible and unified method for CATE/CLATE/high-dim cases
 - In applications, we illustrate the use of the tests and its assistance to subpopulation analysis
 
-[Final notes:]{.blue}
+[Caveats:]{.blue}
 
 - Rejecting $H_0$ is sufficient but *not* necessary for the existence of HTE
 - Able to assess HTE with respect to a subset of the available covariates and not only the entire set
   - With high-dim covariates, need to project TE on a low-dim subset
   - Regularity conditions are binding the choice of this low-dim subset
-
-[More in the paper:]{.blue}
-
-- Proof of the semiparametric efficiency of the BLP coefficient estimators
-- Another application (401(k) pension plan) for illustrating the tests with IV and DML
+  - Or recursively project on one covariate and transform the high-dimension problem to multiple testing with adjusted significance level
 
 
 

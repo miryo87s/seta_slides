@@ -589,32 +589,29 @@ CLATE(x) = \frac{\mathbb{E}[\hat{Y}_i^*|X_i = x]}{\mathbb{E}[\hat{W}_i^*|X_i = x
 \begin{bmatrix} \hat{Y}^* \\ \hat{W}^* \end{bmatrix} = \begin{bmatrix} \mathbf{1} &amp; \mathbf{0} &amp; X &amp; \mathbf{0} \\ \mathbf{0} &amp; \mathbf{1} &amp; \mathbf{0} &amp; X\end{bmatrix} \begin{bmatrix}\beta_c \\ \alpha_c \\ \beta_x \\ \alpha_x \end{bmatrix} + \begin{bmatrix} \epsilon_{1} \\ \epsilon_{2}  \end{bmatrix}
 \]</span></p>
 </section>
-<section id="simulations" class="slide level2">
-<h2>Simulations</h2>
+<section id="simulated-size-of-the-tests" class="slide level2">
+<h2>Simulated Size of the Tests</h2>
 <div class="panel-tabset">
-<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Size</a></li><li><a href="#tabset-1-2">Power Comparison</a></li></ul>
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Designs</a></li><li><a href="#tabset-1-2">Result</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1">
-<div class="columns">
-<div class="column" style="width:35%;">
-<ul>
-<li><p>Design1: Experimental data</p></li>
-<li><p>Design2-4: Survey data, <br>different nonlinearity in CATE</p></li>
-<li><p>IV: Survey data with instrument</p></li>
-</ul>
-</div><div class="column" style="width:65%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="fig/size.png" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
+<p><span class="math display">\[
+Y_i(w) = \mu_0(0, X_i) + \tau_0(X_i) \cdot w + \epsilon_i, \quad Pr(W_i = 1|X_i) = e_0(X_i)
+\]</span></p>
+<p>Designs:</p>
+<ol type="1">
+<li><p><span class="math inline">\(\mu_0(0, x) = 1 + \sum_{p = 1}^{2}x_p\)</span>; <span class="math inline">\(\tau_0(x) = \alpha \sum_{p = 1}^{2}x_p\)</span>; <span class="math inline">\(e_0(x) = 0.5\)</span></p></li>
+<li><p><span class="math inline">\(\mu_0(0, x) = 1 + \sum_{p = 1}^{2}x_p\)</span>; <span class="math inline">\(\tau_0(x) = \alpha \sum_{p = 1}^{2}x_p\)</span>; <span class="math inline">\(e_0(x) = 1 / (1 + \exp(-1 - 0.4x_1 + 0.2x_2))\)</span></p></li>
+<li><p><span class="math inline">\(\mu_0(0, x) = 1 + \sum_{p = 1}^{2}x_p\)</span>; <span class="math inline">\(\tau_0(x) = \alpha (x_1 + x_2 + x_1 \cdot x_2)\)</span>; <span class="math inline">\(e_0(x) = 1 / (1 + \exp(-1 - 0.4x_1 + 0.2x_2))\)</span></p></li>
+<li><p><span class="math inline">\(\mu_0(0, x) = 1 + \sum_{p = 1}^{2}x_p\)</span>; <span class="math inline">\(\tau_0(x) = \alpha(1\{x_1 &gt; 0\} - 1\{x_1 \leqslant 0\})\)</span>; <span class="math inline">\(e_0(x) = 1 / (1 + \exp(-1 - 0.4x_1 + 0.2x_2))\)</span></p></li>
+</ol>
+<p>IV: Linear outcome and TE functions similar to Design 2, but with a binary instrument that has a logit propensity score</p>
 </div>
 <div id="tabset-1-2">
+<p>Compared with the tests developed by <span class="citation" data-cites="crump2008nonparametric">Crump et al. (<a href="#/references" role="doc-biblioref" onclick="">2008</a>)</span></p>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="fig/compare.png" style="width:75.0%"></p>
+<p><img data-src="fig/size.png" style="width:50.0%"></p>
 </figure>
 </div>
 </div>
@@ -640,7 +637,7 @@ CLATE(x) = \frac{\mathbb{E}[\hat{Y}_i^*|X_i = x]}{\mathbb{E}[\hat{W}_i^*|X_i = x
 <li>ATE estimates: <span class="math inline">\(-0.088^{***}\)</span>, <span class="math inline">\(0.005\)</span>, <span class="math inline">\(-0.067^{***}\)</span>
 <ul>
 <li>Being the only children decreases confidence and exacerbates desperation</li>
-<li>The insignificance of the effect on anxiety can be misleading if focused on ATE only</li>
+<li>The insignificance of the effect on anxiety can be <strong>misleading if focused on ATE only</strong></li>
 </ul></li>
 </ul>
 </div>
@@ -656,24 +653,21 @@ CLATE(x) = \frac{\mathbb{E}[\hat{Y}_i^*|X_i = x]}{\mathbb{E}[\hat{W}_i^*|X_i = x
 </section>
 <section id="conclusion" class="slide level2">
 <h2>Conclusion</h2>
+<p><br></p>
 <ul>
 <li>Two-step tests for HTE that are straightforward to implement</li>
 <li>Flexible and unified method for CATE/CLATE/high-dim cases</li>
 <li>In applications, we illustrate the use of the tests and its assistance to subpopulation analysis</li>
 </ul>
-<p><span class="blue">Final notes:</span></p>
+<p><span class="blue">Caveats:</span></p>
 <ul>
 <li>Rejecting <span class="math inline">\(H_0\)</span> is sufficient but <em>not</em> necessary for the existence of HTE</li>
 <li>Able to assess HTE with respect to a subset of the available covariates and not only the entire set
 <ul>
 <li>With high-dim covariates, need to project TE on a low-dim subset</li>
 <li>Regularity conditions are binding the choice of this low-dim subset</li>
+<li>Or recursively project on one covariate and transform the high-dimension problem to multiple testing with adjusted significance level</li>
 </ul></li>
-</ul>
-<p><span class="blue">More in the paper:</span></p>
-<ul>
-<li>Proof of the semiparametric efficiency of the BLP coefficient estimators</li>
-<li>Another application (401(k) pension plan) for illustrating the tests with IV and DML</li>
 </ul>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
