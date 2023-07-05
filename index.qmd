@@ -85,24 +85,7 @@ $$
 
 :::
 
-## Related Literature
-
-- This paper studies the **same hypotheses as in @crump2008nonparametric**
-  - But use different methods and extend to heterogeneity in LATE
-- Employed idea of inference on **conditional effects with IPW**
-  - @abrevaya2015estimating; @chang2015nonparametric; @hsu2017consistent; **@sant2021nonparametric**
-
-<hr>
-
-The closest paper to mine is **@sant2021nonparametric**:
-
-- **@sant2021nonparametric**: distributional besides average effects, and allow for right-censored data, which I do not have
-- On the other hand, I have the unique features:
-  - Tests are [straightforward to implement]{.blue} by using AIPW instead of IPW, as only standard outputs from statistical softwares are required
-  - Develop tests in the presence of [high-dimensional covariates using DML]{.blue}
-  - [Projection coefficients]{.blue} of conditional effects are estimated, which can provide a profile of the heterogeneity
-
-## Identification Assumptions for CATE
+## Identification of CATE
 
 ::: {.callout-warning}
 ## Identification Assumptions for CATE
@@ -121,7 +104,24 @@ $$
 \hat{Y}^*_i = W_i\frac{Y_i - \hat\mu(1, X_i)}{\hat{e}(X_i)} - (1 - W_i)\frac{Y_i - \hat\mu(0, X_i)}{1 - \hat{e}(X_i)} + \hat\mu(1, X_i) - \hat\mu(0, X_i)
 $$
 
-- Under identification assumptions, $\mathbb{E}[\hat{Y_i^*}|X_i = x] = \tau(x)$
+- Under identification assumptions, $\mathbb{E}[\hat{Y}^*_i|X_i = x] = \tau(x)$
+
+## Related Literature
+
+- This paper studies the **same hypotheses as in @crump2008nonparametric**
+  - But use different methods and extend to heterogeneity in LATE
+- Employed idea of inference on **conditional effects with IPW**
+  - @abrevaya2015estimating; @chang2015nonparametric; @hsu2017consistent; **@sant2021nonparametric**
+
+<hr>
+
+The closest paper to mine is **@sant2021nonparametric**:
+
+- **@sant2021nonparametric**: distributional besides average effects, and allow for right-censored data, which I do not have
+- On the other hand, I have the unique features:
+  - Tests are [straightforward to implement]{.blue} by using AIPW instead of IPW, as only standard outputs from statistical softwares are required
+  - Develop tests in the presence of [high-dimensional covariates using DML]{.blue}
+  - [Projection coefficients]{.blue} of conditional effects are estimated, which can provide a profile of the heterogeneity
 
 ## Why AIPW?
 

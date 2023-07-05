@@ -415,6 +415,31 @@ Fangzhou Yu
 </ol>
 </div>
 </section>
+<section id="identification-of-cate" class="slide level2">
+<h2>Identification of CATE</h2>
+<div class="callout callout-warning no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Identification Assumptions for CATE</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>Unconfoundedness:</strong> <span class="math inline">\(W_i \perp (Y_i(1), Y_i(0)) | X_i\)</span></p>
+<p><strong>Overlap:</strong> <span class="math inline">\(\exists \xi &gt; 0\)</span>, s.t. <span class="math inline">\(\xi \leqslant e_0(x) \leqslant 1 - \xi\)</span> for all <span class="math inline">\(x\)</span></p>
+</div>
+</div>
+</div>
+<p>where <span class="math inline">\(e_0(x) = P(W_i = 1|X_i = x)\)</span> is the propensity score.</p>
+<ul>
+<li>Further define <span class="math inline">\(\mu_0(w, x) = \mathbb{E}[Y_i(w)|X_i = x]\)</span></li>
+<li>Then the AIPW transformation is</li>
+</ul>
+<p><span class="math display">\[
+\hat{Y}^*_i = W_i\frac{Y_i - \hat\mu(1, X_i)}{\hat{e}(X_i)} - (1 - W_i)\frac{Y_i - \hat\mu(0, X_i)}{1 - \hat{e}(X_i)} + \hat\mu(1, X_i) - \hat\mu(0, X_i)
+\]</span></p>
+<ul>
+<li>Under identification assumptions, <span class="math inline">\(\mathbb{E}[\hat{Y}^*_i|X_i = x] = \tau(x)\)</span></li>
+</ul>
+</section>
 <section id="related-literature" class="slide level2">
 <h2>Related Literature</h2>
 <ul>
@@ -437,31 +462,6 @@ Fangzhou Yu
 <li>Develop tests in the presence of <span class="blue">high-dimensional covariates using DML</span></li>
 <li><span class="blue">Projection coefficients</span> of conditional effects are estimated, which can provide a profile of the heterogeneity</li>
 </ul></li>
-</ul>
-</section>
-<section id="identification-assumptions-for-cate" class="slide level2">
-<h2>Identification Assumptions for CATE</h2>
-<div class="callout callout-warning no-icon callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Identification Assumptions for CATE</strong></p>
-</div>
-<div class="callout-content">
-<p><strong>Unconfoundedness:</strong> <span class="math inline">\(W_i \perp (Y_i(1), Y_i(0)) | X_i\)</span></p>
-<p><strong>Overlap:</strong> <span class="math inline">\(\exists \xi &gt; 0\)</span>, s.t. <span class="math inline">\(\xi \leqslant e_0(x) \leqslant 1 - \xi\)</span> for all <span class="math inline">\(x\)</span></p>
-</div>
-</div>
-</div>
-<p>where <span class="math inline">\(e_0(x) = P(W_i = 1|X_i = x)\)</span> is the propensity score.</p>
-<ul>
-<li>Further define <span class="math inline">\(\mu_0(w, x) = \mathbb{E}[Y_i(w)|X_i = x]\)</span></li>
-<li>Then the AIPW transformation is</li>
-</ul>
-<p><span class="math display">\[
-\hat{Y}^*_i = W_i\frac{Y_i - \hat\mu(1, X_i)}{\hat{e}(X_i)} - (1 - W_i)\frac{Y_i - \hat\mu(0, X_i)}{1 - \hat{e}(X_i)} + \hat\mu(1, X_i) - \hat\mu(0, X_i)
-\]</span></p>
-<ul>
-<li>Under identification assumptions, <span class="math inline">\(\mathbb{E}[\hat{Y_i^*}|X_i = x] = \tau(x)\)</span></li>
 </ul>
 </section>
 <section id="why-aipw" class="slide level2">
