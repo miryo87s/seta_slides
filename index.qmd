@@ -315,7 +315,7 @@ Compared with the tests developed by @crump2008nonparametric
 - Able to assess HTE with respect to a subset of the available covariates and not only the entire set
   - With high-dim covariates, need to project TE on a low-dim subset
   - Regularity conditions are binding the choice of this low-dim subset
-  - Or recursively project on one covariate and transform the high-dimension problem to multiple testing with adjusted significance level
+  - Or recursively project on each covariate and transform the high-dimension problem to multiple testing with adjusted significance level
 
 
 
