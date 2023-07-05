@@ -197,7 +197,7 @@ $$
 
 1. **Neyman Orthogonality** <br> I prove that the moment function of projecting **AIPW** transformed $\hat{Y}^*_i$ on $X_i$ is **Neyman Orthogonal**, namely
 $$
-\partial_\gamma \mathbb{E}[g(D_i, \beta, \gamma_0][\gamma - \gamma_0] = 0
+\partial_\gamma \mathbb{E}[g(D_i, \beta, \gamma_0)][\gamma - \gamma_0] = 0
 $$
 where $\partial_\gamma$ is the Gatueax derivative operator and $\gamma = (e(x), \mu(w, x))$ is infinite-dimensional parameter with
 $$
