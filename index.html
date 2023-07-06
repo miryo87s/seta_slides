@@ -447,7 +447,7 @@ Fangzhou Yu
 <ul>
 <li>But use different methods and extend to heterogeneity in LATE</li>
 </ul></li>
-<li>Employed idea of inference on <strong>conditional effects with IPW</strong>
+<li>Employ the idea of inference on <strong>conditional effects with IPW</strong>
 <ul>
 <li><span class="citation" data-cites="abrevaya2015estimating">Abrevaya, Hsu, and Lieli (<a href="#/references" role="doc-biblioref" onclick="">2015</a>)</span>; <span class="citation" data-cites="chang2015nonparametric">Chang, Lee, and Whang (<a href="#/references" role="doc-biblioref" onclick="">2015</a>)</span>; <span class="citation" data-cites="hsu2017consistent">Hsu (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span>; <strong><span class="citation" data-cites="sant2021nonparametric">Sant’Anna (<a href="#/references" role="doc-biblioref" onclick="">2021</a>)</span></strong></li>
 </ul></li>
@@ -509,7 +509,7 @@ Fangzhou Yu
 <li>Need to take into account plugged-in <span class="math inline">\(\hat{e}(x)\)</span> and <span class="math inline">\(\hat\mu(w, x)\)</span></li>
 </ul>
 <p><span class="math display">\[
-\sqrt{n}(\hat\beta - \beta_0) = \left(\frac1n \sum_{i = 1}^{n} X_i'X_i\right)^{-1} \left(\frac{1}{\sqrt{n}}\sum_{i = 1}^{n} \left(X_i\epsilon_i + \underbrace{X_i'\frac{\partial\hat{Y}^*_i}{\partial \gamma} (\hat\gamma - \gamma_0)}_{\color{red}{\frac1n \sum \cdot\rightarrow 0 \text{ because of  AIPW}}}\right)\right)
+\sqrt{n}(\hat\beta - \beta_0) = \left(\frac1n \sum_{i = 1}^{n} X_i'X_i\right)^{-1} \left(\frac{1}{\sqrt{n}}\sum_{i = 1}^{n} \left(X_i\epsilon_i + \underbrace{X_i'\frac{\partial\hat{Y}^*_i}{\partial \gamma} (\hat\gamma - \gamma_0)}_{\color{red}{\frac{1}{\sqrt{n}} \sum \cdot\rightarrow 0 \text{ because of  AIPW}}}\right)\right)
 \]</span> where <span class="math inline">\(\gamma\)</span> are the parameters in <span class="math inline">\(\hat{e}(x)\)</span> and <span class="math inline">\(\hat{\mu}(w, x)\)</span>. Thus, <span class="math inline">\(\hat\beta\)</span> has the <span class="blue">standard OLS asymptotic distribution</span></p>
 <div class="callout callout-note no-icon callout-titled callout-style-default">
 <div class="callout-body">

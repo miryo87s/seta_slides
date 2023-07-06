@@ -110,7 +110,7 @@ $$
 
 - This paper studies the **same hypotheses as in @crump2008nonparametric**
   - But use different methods and extend to heterogeneity in LATE
-- Employed idea of inference on **conditional effects with IPW**
+- Employ the idea of inference on **conditional effects with IPW**
   - @abrevaya2015estimating; @chang2015nonparametric; @hsu2017consistent; **@sant2021nonparametric**
 
 <hr>
@@ -163,7 +163,7 @@ $$\begin{aligned}
 - Need to take into account plugged-in $\hat{e}(x)$ and $\hat\mu(w, x)$
 
 $$
-\sqrt{n}(\hat\beta - \beta_0) = \left(\frac1n \sum_{i = 1}^{n} X_i'X_i\right)^{-1} \left(\frac{1}{\sqrt{n}}\sum_{i = 1}^{n} \left(X_i\epsilon_i + \underbrace{X_i'\frac{\partial\hat{Y}^*_i}{\partial \gamma} (\hat\gamma - \gamma_0)}_{\color{red}{\frac1n \sum \cdot\rightarrow 0 \text{ because of  AIPW}}}\right)\right)
+\sqrt{n}(\hat\beta - \beta_0) = \left(\frac1n \sum_{i = 1}^{n} X_i'X_i\right)^{-1} \left(\frac{1}{\sqrt{n}}\sum_{i = 1}^{n} \left(X_i\epsilon_i + \underbrace{X_i'\frac{\partial\hat{Y}^*_i}{\partial \gamma} (\hat\gamma - \gamma_0)}_{\color{red}{\frac{1}{\sqrt{n}} \sum \cdot\rightarrow 0 \text{ because of  AIPW}}}\right)\right)
 $$
 where $\gamma$ are the parameters in $\hat{e}(x)$ and $\hat{\mu}(w, x)$. Thus, $\hat\beta$ has the [standard OLS asymptotic distribution]{.blue}
 
