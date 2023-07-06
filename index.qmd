@@ -143,7 +143,7 @@ The closest paper to mine is **@sant2021nonparametric**:
 
 **Two-step procedure**
 
-1. Transform $Y_i$ by **AIPW** with consistent **parametric** estimators $\hat\mu_0(w, x)$ and $\hat{e}_0(x)$ to obtain $\hat{Y}^*_i$
+1. Transform $Y_i$ by **AIPW** with consistent **parametric** estimators $\hat\mu(w, x)$ and $\hat{e}(x)$ to obtain $\hat{Y}^*_i$
 
 2. Estimate the projection coefficients $\beta_0 = (\beta_0^c, \beta_0^{x'})'$ of $\hat{Y}^*_i$ on $X_i$ by OLS. 
 
