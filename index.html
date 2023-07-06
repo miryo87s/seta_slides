@@ -582,7 +582,7 @@ CLATE(x) = \frac{\mathbb{E}[\hat{Y}_i^*|X_i = x]}{\mathbb{E}[\hat{W}_i^*|X_i = x
 <li><p>The analogous hypotheses for CLATE:</p>
 <ul>
 <li><span class="math inline">\(H_0: CLATE(x) = 0\)</span> for all <span class="math inline">\(x\)</span> translates into <span class="math inline">\(\beta_0 = 0\)</span></li>
-<li><span class="math inline">\(H_0:\)</span> constant <span class="math inline">\(CLATE(x)\)</span> translates into <span class="math inline">\(\frac{\beta_0^x}{\alpha_0^x} = \frac{\beta_0^c}{\alpha_0^c}\)</span></li>
+<li><span class="math inline">\(H_0:\)</span> constant <span class="math inline">\(CLATE(x)\)</span> translates into <span class="math inline">\(\beta_0^x = \frac{\beta_0^c}{\alpha_0^c}\alpha_0^x\)</span></li>
 </ul></li>
 </ul>
 <p>Obtain <span class="math inline">\(\hat\alpha\)</span> and <span class="math inline">\(\hat\beta\)</span> by one regression, and implement <span class="blue">Wald test + Delta method</span> <span class="math display">\[

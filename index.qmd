@@ -238,7 +238,7 @@ $$
 - Let $\beta_0$ and $\alpha_0$ denote the BLP coefficients in the numerator and denominator respectively
 - The analogous hypotheses for CLATE:
   - $H_0: CLATE(x) = 0$ for all $x$ translates into $\beta_0 = 0$
-  - $H_0:$ constant $CLATE(x)$ translates into $\frac{\beta_0^x}{\alpha_0^x} = \frac{\beta_0^c}{\alpha_0^c}$
+  - $H_0:$ constant $CLATE(x)$ translates into $\beta_0^x = \frac{\beta_0^c}{\alpha_0^c}\alpha_0^x$
 
 Obtain $\hat\alpha$ and $\hat\beta$ by one regression, and implement [Wald test + Delta method]{.blue}
 $$
