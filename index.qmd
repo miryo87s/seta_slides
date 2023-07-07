@@ -310,7 +310,7 @@ Compared with the tests developed by @crump2008nonparametric
 - Flexible and unified method for CATE/CLATE/high-dim cases
 - In applications, we illustrate the use of the tests and its assistance to subpopulation analysis
 
-[Caveats:]{.blue}
+[Final notes:]{.blue}
 
 - Rejecting $H_0$ is sufficient but *not* necessary for the existence of HTE
 - Able to assess HTE with respect to a subset of the available covariates and not only the entire set
