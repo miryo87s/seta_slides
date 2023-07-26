@@ -4,7 +4,7 @@ format:
     theme: ["theme/q-theme.scss"]
     slide-number: c/t
     logo: "unsw-long.png"
-    footer: "SETA"
+    footer: "EcoSta 2023"
     code-copy: true
     center-title-slide: false
     include-in-header: heading-meta.html
@@ -39,7 +39,7 @@ editor:
 
 <br>
 
-<h2>SETA conference</h2>
+<h2>EcoSta conference</h2>
 
 <hr>
 
