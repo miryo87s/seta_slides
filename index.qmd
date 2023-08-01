@@ -308,7 +308,7 @@ Compared with the tests developed by @crump2008nonparametric
 
 - Two-step tests for HTE that are straightforward to implement
 - Flexible and unified method for CATE/CLATE/high-dim cases
-- In applications, we illustrate the use of the tests and its assistance to subpopulation analysis
+- The applications illustrate the use of the tests and its assistance to subpopulation analysis
 
 [Final notes:]{.blue}
 
