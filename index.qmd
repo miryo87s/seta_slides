@@ -121,7 +121,7 @@ The closest paper to mine is **@sant2021nonparametric**:
 - **@sant2021nonparametric**: distributional besides average effects, and allow for right-censored data, which I do not have
 - On the other hand, I have the unique features:
   - Tests are [straightforward to implement]{.blue} by using AIPW instead of IPW, as only standard outputs from statistical softwares are required
-  - Develop tests in the presence of [high-dimensional covariates using DML]{.blue}
+  - Develop tests with DML when [identification is achieved with high-dimensional covariates]{.blue}
   - [Projection coefficients]{.blue} of conditional effects are estimated, which can provide a profile of the heterogeneity
 
 ## Why AIPW?
@@ -313,7 +313,7 @@ Compared with the tests developed by @crump2008nonparametric
 [Final notes:]{.blue}
 
 - Rejecting $H_0$ is sufficient but *not* necessary for the existence of HTE
-- Able to assess HTE with respect to a subset of the available covariates and not only the entire set
+- Works with high-dimensional identification but not high-dim hetergeneity
   - With high-dim covariates, need to project TE on a low-dim subset
   - Regularity conditions are binding the choice of this low-dim subset
   - Or recursively project on each covariate and transform the high-dimension problem to multiple testing with adjusted significance level

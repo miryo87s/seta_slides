@@ -460,7 +460,7 @@ Fangzhou Yu
 <li>On the other hand, I have the unique features:
 <ul>
 <li>Tests are <span class="blue">straightforward to implement</span> by using AIPW instead of IPW, as only standard outputs from statistical softwares are required</li>
-<li>Develop tests in the presence of <span class="blue">high-dimensional covariates using DML</span></li>
+<li>Develop tests with DML when <span class="blue">identification is achieved with high-dimensional covariates</span></li>
 <li><span class="blue">Projection coefficients</span> of conditional effects are estimated, which can provide a profile of the heterogeneity</li>
 </ul></li>
 </ul>
@@ -663,7 +663,7 @@ Y_i(w) = \mu_0(0, X_i) + \tau_0(X_i) \cdot w + \epsilon_i, \quad Pr(W_i = 1|X_i)
 <p><span class="blue">Final notes:</span></p>
 <ul>
 <li>Rejecting <span class="math inline">\(H_0\)</span> is sufficient but <em>not</em> necessary for the existence of HTE</li>
-<li>Able to assess HTE with respect to a subset of the available covariates and not only the entire set
+<li>Works with high-dimensional identification but not high-dim hetergeneity
 <ul>
 <li>With high-dim covariates, need to project TE on a low-dim subset</li>
 <li>Regularity conditions are binding the choice of this low-dim subset</li>
