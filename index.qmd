@@ -4,7 +4,7 @@ format:
     theme: ["theme/q-theme.scss"]
     slide-number: c/t
     logo: "unsw-long.png"
-    footer: "EcoSta 2023"
+    footer: "PhD Conference 2023"
     code-copy: true
     center-title-slide: false
     include-in-header: heading-meta.html
@@ -39,13 +39,13 @@ editor:
 
 <br>
 
-<h2>EcoSta conference</h2>
+<h2>PhD conference</h2>
 
 <hr>
 
 <h3>Fangzhou Yu</h3>
 
-<h3>2023-08-02</h3>
+<h3>2023-11-16</h3>
 
 <br>
 
@@ -302,7 +302,25 @@ Compared with the tests developed by @crump2008nonparametric
 
 :::
 
-## Conclusion
+## Final Notes
+
+<br>
+
+- Rejecting $H_0$ is sufficient but **not** necessary for the existence of HTE
+  - The tests are based on linear projection
+- [Recommendation:]{.blue} Add higher-order terms to test for potential non-linear HTE
+  
+<hr>
+
+- Works with high-dimensional identification but **not** high-dim heterogeneity
+  - With high-dim covariates, need to project TE on a low-dim subset
+  - Regularity conditions are binding the choice of this low-dim subset
+- [Recommendation: ]{.blue} Constant CATE test with respect to each covariate, one by one
+  - Convert the high-dim HTE to a multiple testing problem
+  - @list2019multiple: a bootstrap-based approach to the multiple testing problem allowing for dependence among test statistics
+
+
+## Conclusion {.center}
 
 <br>
 
@@ -310,13 +328,6 @@ Compared with the tests developed by @crump2008nonparametric
 - Flexible and unified method for CATE/CLATE/high-dim cases
 - The applications illustrate the use of the tests and its assistance to subpopulation analysis
 
-[Final notes:]{.blue}
-
-- Rejecting $H_0$ is sufficient but *not* necessary for the existence of HTE
-- Works with high-dimensional identification but not high-dim hetergeneity
-  - With high-dim covariates, need to project TE on a low-dim subset
-  - Regularity conditions are binding the choice of this low-dim subset
-  - Or recursively project on each covariate and transform the high-dimension problem to multiple testing with adjusted significance level
 
 
 
