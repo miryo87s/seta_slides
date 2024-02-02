@@ -4,7 +4,7 @@ format:
     theme: ["theme/q-theme.scss"]
     slide-number: c/t
     logo: "unsw-long.png"
-    footer: "PhD Conference 2023"
+    footer: "ANZESG 2024"
     code-copy: true
     center-title-slide: false
     include-in-header: heading-meta.html
@@ -18,7 +18,7 @@ format:
     linestretch: 1.7
     auto-stretch: false
     html-math-method: mathjax
-    # embed-resources: true
+    embed-resources: false
 callout-appearance: default
 callout-icon: false
 bibliography: ref.bib
@@ -39,13 +39,13 @@ editor:
 
 <br>
 
-<h2>PhD conference</h2>
+<h2>ANZESG Meeting</h2>
 
 <hr>
 
 <h3>Fangzhou Yu</h3>
 
-<h3>2023-11-16</h3>
+<h3>2024-02-09</h3>
 
 <br>
 
